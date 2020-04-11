@@ -4,16 +4,14 @@ public class List {
     private ListElement head;     // первый элемент списка
     private ListElement tail;     // последний элемент списка
 
-    public List() {     // конструктор для списка
-        this.head = new ListElement(0, null);
-        this.tail = head;
+    public List() {
     }
 
     public void add(int element) {     // метод добавления элемента в список
         ListElement temp = new ListElement(element, null);
-        if (head.getData() == 0) {
-            head = temp;
-            tail = head;
+        if (head == null) {
+            this.head = temp;
+            this.tail = head;
         } else {
             tail.setNext(temp);
             tail = tail.getNext();
@@ -48,9 +46,14 @@ public class List {
         for (int j = 0; j <= i - 1; j++) {
             curListElement = nextListElement;
             nextListElement = nextListElement.getNext();
-            if (j == i - 1) {
-                curListElement.setData(nextListElement.getData());
-                curListElement.setNext(nextListElement.getNext());
+            if (j == i - 2 && nextListElement.getNext() == null) {
+                curListElement.setNext(null);
+                break;
+            } else {
+                if (j == i - 1) {
+                    curListElement.setData(nextListElement.getData());
+                    curListElement.setNext(nextListElement.getNext());
+                }
             }
         }
     }
@@ -74,18 +77,17 @@ public class List {
         }
         ListElement temp = head;
         int i = 0;
-            while (temp.getNext() != null) {
-                arr[i] = temp.getData();
-                temp = temp.getNext();
-                i++;
-            }
+        while (temp.getNext() != null) {
+            arr[i] = temp.getData();
+            temp = temp.getNext();
+            i++;
+        }
         arr[i] = temp.getData();
         return arr;
     }
 
     public void clear() {     // метод очистки списка
-        head.setData(0);
-        head.setNext(null);
-        tail = head;
+        head = null;
+        tail = null;
     }
 }
